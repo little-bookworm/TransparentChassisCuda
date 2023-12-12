@@ -320,6 +320,11 @@ namespace ParkingPerception
             return 0;
         }
 
+        void TransparentChassis::get_result(cv::Mat &out)
+        {
+            out=output.clone();
+        }
+        
         void TransparentChassis::get_warpaffine(const LocData &loc_now)
         {
             //前一帧的car->global

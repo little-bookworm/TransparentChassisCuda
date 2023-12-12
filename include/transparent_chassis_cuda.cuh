@@ -2,7 +2,7 @@
  * @Author: zjj
  * @Date: 2023-12-12 15:16:50
  * @LastEditors: zjj
- * @LastEditTime: 2023-12-12 16:53:57
+ * @LastEditTime: 2023-12-12 17:46:00
  * @FilePath: /TransparentChassisCuda/include/transparent_chassis_cuda.cuh
  * @Description:
  *
@@ -53,14 +53,12 @@ public:
   ~TransparentChassis();
   int init();
   int process(const cv::Mat& img_now, const LocData& loc_now);
+  void get_result(cv::Mat &out);
 
 private:
   int load_config(std::string& config_path);
   void get_warpaffine(const LocData& loc_now);
   void destroy();
-
-public:
-  cv::Mat output;
 
 private:
   // cuda
@@ -77,6 +75,7 @@ private:
   int filter_kernel_size = 0;
   uchar3* weight_device = nullptr;  // gpu上存储的融合时权重
   //图像
+  cv::Mat output;//输出图像
   uchar3* img_pre_device = nullptr;     // gpu上存储的上一帧图像
   uchar3* img_fusion_device = nullptr;  // gpu上存储的上一帧变换到当前时刻的图像
   uchar3* img_now_device = nullptr;     // gpu上存储的当前时刻图像

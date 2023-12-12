@@ -32,15 +32,18 @@ int main()
 
   //运行
   transparent_chassis->process(img0, loc0);
-  cv::Mat output0 = transparent_chassis->output.clone();
+  cv::Mat output0;
+  transparent_chassis->get_result(output0);
 
   //运行
   transparent_chassis->process(img1, loc1);
-  cv::Mat output1 = transparent_chassis->output.clone();
+  cv::Mat output1;
+  transparent_chassis->get_result(output1);
 
   //运行
   transparent_chassis->process(img2, loc2);
-  cv::Mat output2 = transparent_chassis->output.clone();
+  cv::Mat output2;
+  transparent_chassis->get_result(output2);
 
   std::string save_path0 = "/hostdata/projects/parking_perception/modules/TransparentChassisCuda/test/output0.png";
   cv::imwrite(save_path0, output0);
