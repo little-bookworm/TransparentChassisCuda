@@ -235,8 +235,12 @@ namespace ParkingPerception
         int TransparentChassis::load_config(std::string &config_path)
         {
             //导入yaml文件
-            YAML::Node config = YAML::LoadFile(config_path);
-            if (!config)
+            YAML::Node config;
+            try
+            {
+                config = YAML::LoadFile(config_path);
+            }
+            catch (const std::exception &e)
             {
                 std::cout << "[TransparentChassis]->[load_config] No config file: " << config_path << std::endl;
                 return -1;
@@ -322,9 +326,9 @@ namespace ParkingPerception
 
         void TransparentChassis::get_result(cv::Mat &out)
         {
-            out=output.clone();
+            out = output.clone();
         }
-        
+
         void TransparentChassis::get_warpaffine(const LocData &loc_now)
         {
             //前一帧的car->global
