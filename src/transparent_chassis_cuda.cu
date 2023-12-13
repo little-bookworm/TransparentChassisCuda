@@ -180,14 +180,8 @@ namespace ParkingPerception
             fusion_ptr[2] = (1 - r) * fusion_ptr[2] + r * now_ptr[2];
         }
 
-        TransparentChassis::TransparentChassis(std::string config_path)
+        TransparentChassis::TransparentChassis(std::string config_path) : config_path_(config_path)
         {
-            if (0 != load_config(config_path))
-            {
-                std::cout << "[TransparentChassis]->[constructor] Failed to load config file." << std::endl;
-                return;
-            }
-            std::cout << "[TransparentChassis]->[constructor] Loading config file success." << std::endl;
         }
 
         TransparentChassis::~TransparentChassis()
@@ -197,6 +191,12 @@ namespace ParkingPerception
 
         int TransparentChassis::init()
         {
+            if (0 != load_config())
+            {
+                std::cout << "[TransparentChassis]->[init] Failed to load config file." << std::endl;
+                return -1;
+            }
+
             //初始化融合权重
             cv::Mat weight_tmp(cv::Size(w, h), CV_8UC3, cv::Scalar(255, 255, 255));
             cv::rectangle(
@@ -232,17 +232,17 @@ namespace ParkingPerception
             return 0;
         }
 
-        int TransparentChassis::load_config(std::string &config_path)
+        int TransparentChassis::load_config()
         {
             //导入yaml文件
             YAML::Node config;
             try
             {
-                config = YAML::LoadFile(config_path);
+                config = YAML::LoadFile(config_path_);
             }
             catch (const std::exception &e)
             {
-                std::cout << "[TransparentChassis]->[load_config] No config file: " << config_path << std::endl;
+                std::cout << "[TransparentChassis]->[load_config] No config file: " << config_path_ << std::endl;
                 return -1;
             }
 
