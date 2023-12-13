@@ -9,7 +9,7 @@ int main()
   //构造实例
   std::string config_path =
       "/hostdata/projects/parking_perception/modules/TransparentChassisCuda/config/TransparentChassisCuda.yaml";
-  TransparentChassis* transparent_chassis = CreateTransparentChassis(config_path);
+  std::shared_ptr<TransparentChassis> transparent_chassis = CreateTransparentChassis(config_path);
 
   //初始化
   if (0 != transparent_chassis->init())

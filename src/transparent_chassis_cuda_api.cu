@@ -2,11 +2,11 @@
 
 namespace ParkingPerception
 {
-namespace TransparentChassisCuda
-{
-    TransparentChassis *CreateTransparentChassis(std::string config_file)
+    namespace TransparentChassisCuda
     {
-        return new TransparentChassis(config_file);
-    }
-} // namespace TransparentChassisCuda
+        std::shared_ptr<TransparentChassis> CreateTransparentChassis(std::string config_file)
+        {
+            return std::make_shared<TransparentChassis>(config_file);
+        }
+    } // namespace TransparentChassisCuda
 } // namespace ParkingPerception
