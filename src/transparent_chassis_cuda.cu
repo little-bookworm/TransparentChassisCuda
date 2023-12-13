@@ -385,16 +385,51 @@ namespace ParkingPerception
 
         void TransparentChassis::destroy()
         {
-            checkRuntime(cudaStreamDestroy(stream));
-            checkRuntime(cudaFree(weight_device));
-            checkRuntime(cudaFree(img_pre_device));
-            checkRuntime(cudaFree(img_fusion_device));
-            checkRuntime(cudaFree(img_now_device));
-            delete[] affine_now2pre_host;
-            affine_now2pre_host = nullptr;
-            checkRuntime(cudaFree(affine_now2pre_device));
-            checkRuntime(cudaFree(rowImFac_device));
-            checkRuntime(cudaFree(colImFac_device));
+            if (stream)
+            {
+                checkRuntime(cudaStreamDestroy(stream));
+                stream = nullptr;
+            }
+            if (weight_device)
+            {
+                checkRuntime(cudaFree(weight_device));
+                weight_device = nullptr;
+            }
+            if (img_pre_device)
+            {
+                checkRuntime(cudaFree(img_pre_device));
+                img_pre_device = nullptr;
+            }
+            if (img_fusion_device)
+            {
+                checkRuntime(cudaFree(img_fusion_device));
+                img_fusion_device = nullptr;
+            }
+            if (img_now_device)
+            {
+                checkRuntime(cudaFree(img_now_device));
+                img_now_device = nullptr;
+            }
+            if (affine_now2pre_host)
+            {
+                delete[] affine_now2pre_host;
+                affine_now2pre_host = nullptr;
+            }
+            if (affine_now2pre_device)
+            {
+                checkRuntime(cudaFree(affine_now2pre_device));
+                affine_now2pre_device = nullptr;
+            }
+            if (rowImFac_device)
+            {
+                checkRuntime(cudaFree(rowImFac_device));
+                rowImFac_device = nullptr;
+            }
+            if (colImFac_device)
+            {
+                checkRuntime(cudaFree(colImFac_device));
+                colImFac_device = nullptr;
+            }
         }
     }
 }
